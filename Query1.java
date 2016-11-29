@@ -1,15 +1,33 @@
+
 /*
  * @author Sanidhya Singal 2015085
  * @author Pranav Nambiar 2015063
  */
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.security.sasl.AuthorizeCallback;
-import javax.swing.*;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import java.util.*;
 
 public class Query1 extends JFrame {
 	Toolkit kit = Toolkit.getDefaultToolkit();
@@ -24,63 +42,64 @@ public class Query1 extends JFrame {
 	JButton next = new MyButton("Next");
 	int clicks = 0, size = 0;
 	Boolean isYearSelected = false, isRelevanceSelected = false, isAuthorSelected = false, isTitleSelected = false;
-	
+
 	public Query1() {
 		setTitle("DBLP Query Engine");
-		setSize(screenSize.width, screenSize.height - 28);	//1366 x 740
+		setSize(screenSize.width, screenSize.height - 28); // 1366 x 740
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-		
+
 		JLabel label = new JLabel("DBLP Query Engine");
 		label.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		Font myFont = new Font("Bearpaw", Font.PLAIN, 72);
 		Font myFont2 = new Font("Agency FB", Font.BOLD, 24);
 		label.setFont(myFont);
 		add(Box.createVerticalStrut(20));
 		add(label);
-		
+
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		
+
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new GridBagLayout());
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new GridBagLayout());
-		
-		final String[] queries = {"Queries :", "Query 1", "Query 2", "Query 3"};
+
+		final String[] queries = { "Queries :", "Query 1", "Query 2", "Query 3" };
 		JComboBox<String> queryOptions = new JComboBox<>();
 		queryOptions.setForeground(Color.BLACK);
 		queryOptions.setBackground(Color.WHITE);
 		queryOptions.setFont(myFont2);
-    	
+
 		queryOptions.addItem(queries[1]);
 		queryOptions.addItem(queries[2]);
 		queryOptions.addItem(queries[3]);
-		
+
 		JButton searchButton = new MyButton("Search");
 		JButton resetButton = new MyButton("Reset");
-		
+
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.CENTER;
-		gbc.insets = new Insets(10, 10, 10, 50);	//top, left, bottom, right
+		gbc.insets = new Insets(10, 10, 10, 50); // top, left, bottom, right
 		leftPanel.add(queryOptions, gbc);
-		
+
 		JLabel searchLabel = new JLabel();
 		searchLabel.setFont(myFont2);
 		searchLabel.setText("Search By: ");
 		gbc.gridy++;
-		gbc.insets = new Insets(1, 10, 1, 10);	//top, left, bottom, right
+		gbc.insets = new Insets(1, 10, 1, 10); // top, left, bottom, right
 		leftPanel.add(searchLabel, gbc);
-		
+
 		JRadioButton authorName = new JRadioButton("Author Name");
 		JRadioButton titleTags = new JRadioButton("Title Tags");
 		authorName.setFont(new Font("Cambria", Font.PLAIN, 18));
 		titleTags.setFont(new Font("Cambria", Font.PLAIN, 18));
-		
+
 		authorName.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (authorName.isSelected()) {
 					titleTags.setSelected(false);
@@ -90,6 +109,7 @@ public class Query1 extends JFrame {
 		});
 
 		titleTags.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (titleTags.isSelected()) {
 					authorName.setSelected(false);
@@ -102,12 +122,12 @@ public class Query1 extends JFrame {
 		gbc.gridwidth = 4;
 		gbc.insets = new Insets(1, 10, 1, 10);
 		leftPanel.add(authorName, gbc);
-		
+
 		gbc.gridy++;
 		gbc.gridwidth = 4;
 		gbc.insets = new Insets(1, 10, 1, 10);
 		leftPanel.add(titleTags, gbc);
-	
+
 		JLabel nameTag = new JLabel("Name/Title Tags:");
 		JLabel to = new JLabel("TO");
 		JLabel sinceYear = new JLabel("Since Year:");
@@ -116,7 +136,7 @@ public class Query1 extends JFrame {
 		to.setFont(new Font("Cambria", Font.PLAIN, 18));
 		sinceYear.setFont(new Font("Cambria", Font.PLAIN, 18));
 		customRange.setFont(new Font("Cambria", Font.PLAIN, 18));
-		
+
 		JTextField nameTagF = new JTextField();
 		JTextField sinceYearF = new JTextField();
 		JTextField startYear = new JTextField();
@@ -125,51 +145,52 @@ public class Query1 extends JFrame {
 		sinceYearF.setFont(new Font("Cambria", Font.PLAIN, 24));
 		startYear.setFont(new Font("Cambria", Font.PLAIN, 24));
 		endYear.setFont(new Font("Cambria", Font.PLAIN, 24));
-		
+
 		gbc.gridy++;
 		gbc.insets = new Insets(1, 10, 1, 10);
 		leftPanel.add(nameTag, gbc);
-		
+
 		gbc.gridy++;
-		gbc.insets = new Insets(1, 10, 1, 10);	//top, left, bottom, right
+		gbc.insets = new Insets(1, 10, 1, 10); // top, left, bottom, right
 		gbc.gridwidth = 2;
 		leftPanel.add(nameTagF, gbc);
-		
+
 		gbc.gridy++;
 		gbc.insets = new Insets(1, 10, 1, 10);
 		leftPanel.add(sinceYear, gbc);
-		
+
 		gbc.gridx++;
-		gbc.insets = new Insets(1, 10, 1, 10);	//top, left, bottom, right
+		gbc.insets = new Insets(1, 10, 1, 10); // top, left, bottom, right
 		gbc.gridwidth = 2;
 		leftPanel.add(sinceYearF, gbc);
-		
+
 		gbc.gridx--;
 		gbc.gridy++;
 		gbc.insets = new Insets(1, 10, 1, 10);
 		leftPanel.add(customRange, gbc);
-		
+
 		gbc.gridx++;
-		gbc.insets = new Insets(1, 10, 1, 10);	//top, left, bottom, right
+		gbc.insets = new Insets(1, 10, 1, 10); // top, left, bottom, right
 		gbc.gridwidth = 2;
 		leftPanel.add(startYear, gbc);
-		
+
 		gbc.gridy++;
 		gbc.insets = new Insets(1, 40, 1, 10);
 		gbc.gridwidth = 2;
 		leftPanel.add(to, gbc);
-		
+
 		gbc.gridy++;
-		gbc.insets = new Insets(1, 10, 1, 10);	//top, left, bottom, right
+		gbc.insets = new Insets(1, 10, 1, 10); // top, left, bottom, right
 		gbc.gridwidth = 2;
 		leftPanel.add(endYear, gbc);
-		
+
 		JRadioButton sortYear = new JRadioButton("Year (Ascending)");
 		JRadioButton sortRelevance = new JRadioButton("Relevance");
 		sortYear.setFont(new Font("Cambria", Font.PLAIN, 18));
 		sortRelevance.setFont(new Font("Cambria", Font.PLAIN, 18));
 
 		sortYear.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sortYear.isSelected()) {
 					sortRelevance.setSelected(false);
@@ -179,6 +200,7 @@ public class Query1 extends JFrame {
 		});
 
 		sortRelevance.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sortRelevance.isSelected()) {
 					sortYear.setSelected(false);
@@ -192,62 +214,64 @@ public class Query1 extends JFrame {
 		sortLabel.setText("Sort By: ");
 		gbc.gridx = 0;
 		gbc.gridy++;
-		gbc.insets = new Insets(1, 10, 1, 10);	//top, left, bottom, right
+		gbc.insets = new Insets(1, 10, 1, 10); // top, left, bottom, right
 		leftPanel.add(sortLabel, gbc);
-		
+
 		gbc.gridy++;
 		gbc.gridwidth = 4;
 		gbc.insets = new Insets(1, 10, 1, 10);
 		leftPanel.add(sortYear, gbc);
-		
+
 		gbc.gridy++;
 		gbc.gridwidth = 4;
 		gbc.insets = new Insets(1, 10, 1, 10);
 		leftPanel.add(sortRelevance, gbc);
-		
+
 		gbc3.gridx = 0;
 		gbc3.gridy = gbc.gridy + 2;
-		gbc3.insets = new Insets(1, 10, 1, 10);	//top, left, bottom, right
+		gbc3.insets = new Insets(1, 10, 1, 10); // top, left, bottom, right
 		searchButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				String tag, yearSince, yearStart, yearEnd, start, end;
 				tag = nameTagF.getText();
-				
-				if(tag.length()>=20)
+
+				if (tag.length() >= 20) {
 					nameTagF.setText(tag.substring(0, 19));
-				    
+				}
+
 				yearSince = sinceYearF.getText();
 				yearStart = startYear.getText();
 				yearEnd = endYear.getText();
-				
+
 				Prompts prompt = new Prompts();
 				CheckValidString checker = new CheckValidString();
-				
+
 				if (tag.isEmpty()) {
 					prompt.EmptyBoxPrompt();
 					return;
 				}
-				
+
 				if (!yearSince.isEmpty() && (!checker.isNumeric(yearSince) || (yearSince.length() != 4))) {
 					prompt.InvalidEntryPrompt();
 					return;
 				}
-				
+
 				if (!yearStart.isEmpty() && (!checker.isNumeric(yearStart) || (yearStart.length() != 4))) {
 					prompt.InvalidEntryPrompt();
 					return;
 				}
-				
+
 				if (!yearEnd.isEmpty() && (!checker.isNumeric(yearEnd) || (yearEnd.length() != 4))) {
 					prompt.InvalidEntryPrompt();
 					return;
 				}
-				
+
 				if (yearStart.compareTo(yearEnd) > 0) {
 					prompt.InvalidComparisonPrompt();
 					return;
 				}
-				
+
 				if (!(yearSince.isEmpty())) {
 					start = yearSince;
 					end = "";
@@ -255,80 +279,52 @@ public class Query1 extends JFrame {
 						prompt.LeaveEmptyPrompt();
 						return;
 					}
-				}
-				else { 
+				} else {
 					start = yearStart;
 					end = yearEnd;
 				}
-				
+
 				ParseCollection parse;
-				
+
 				if (isRelevanceSelected) {
-					if (isAuthorSelected)
+					if (isAuthorSelected) {
 						parse = new ParseCollection(tag, 1, start, end, 1);
-					else if (isTitleSelected)
+					} else if (isTitleSelected) {
 						parse = new ParseCollection(tag, 2, start, end, 1);
-					else {
+					} else {
 						prompt.SelectButtonPrompt();
 						return;
 					}
 					row = parse.getSortByRelevance();
-				}
-				else {
-					if (isAuthorSelected)
+				} else {
+					if (isAuthorSelected) {
 						parse = new ParseCollection(tag, 1, start, end, 0);
-					else if (isTitleSelected)
+					} else if (isTitleSelected) {
 						parse = new ParseCollection(tag, 2, start, end, 0);
-					else {
+					} else {
 						prompt.SelectButtonPrompt();
 						return;
 					}
 					if (isYearSelected) {
 						row = parse.getSortbyYear();
-					}
-					else {
+					} else {
 						row = parse.getResult();
 					}
 				}
-					
-//				if (isAuthorSelected) {	
-//					ParseCollection parse = new ParseCollection(tag, 1, start, end);
-//					if (isYearSelected)
-//						row = parse.getSortbyYear();
-//					else if (isRelevanceSelected)
-//						row = parse.getSortByRelevance();
-//					else
-//						row = parse.getResult();
-//				}
-//				else if (isTitleSelected) {
-//					ParseCollection parse = new ParseCollection(tag, 2, start, end);
-//					if (isYearSelected)
-//						row = parse.getSortbyYear();
-//					else if (isRelevanceSelected)
-//						row = parse.getSortByRelevance();
-//					else
-//						row = parse.getResult();
-//				}
-//				else {
-//					prompt.SelectButtonPrompt();
-//					return;
-//				}
-				
-//				for (Data i : row)
-//					System.out.println(i);
-				
-				String[] columns = {"S.No.", "Author", "Title", "Pages", "Year", "Volume", "Journal/BookTitle", "URL"};
+
+				String[] columns = { "S.No.", "Author", "Title", "Pages", "Year", "Volume", "Journal/BookTitle",
+						"URL" };
 				String[][] rows = new String[row.size()][8];
-				
+
 				count = row.size();
-				
+
 				if (count == 0) {
 					prompt.zeroResultCount();
 					return;
 				}
-				
-				for (int i=0; i<row.size(); i++) {
-					rows[i][0] = String.valueOf(i+1);
+
+				for (int i = 0; i < row.size(); i++) {
+					rows[i][0] = String.valueOf(i + 1);
 					rows[i][1] = row.get(i).getAuthor();
 					rows[i][2] = row.get(i).getTitle();
 					rows[i][3] = row.get(i).getPages();
@@ -338,60 +334,64 @@ public class Query1 extends JFrame {
 					rows[i][7] = row.get(i).getUrl();
 				}
 
-				for (int i=0; i<columns.length; i++)
+				for (int i = 0; i < columns.length; i++) {
 					model.addColumn(columns[i]);
+				}
 
 				result.setText("No. of Results Obtained: \t" + count);
 
-				size = (count > 20) ? 20 : count ;
-				for (int i=0; i<size; i++) {
+				size = (count > 20) ? 20 : count;
+				for (int i = 0; i < size; i++) {
 					model.insertRow(i, rows[i]);
 				}
-				
+
 				if (count > 20) {
 					next.setEnabled(true);
 				}
-				
+
 				next.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						clicks++;
-						for (int i=(size-((clicks-1)*20))-1; i>=0; i--)
+						for (int i = (size - ((clicks - 1) * 20)) - 1; i >= 0; i--) {
 							model.removeRow(i);
-						size = ((size + 20) > count)? count : (size + 20);
-						for (int i=0; i<(size-(clicks*20)); i++) {
-							model.insertRow(i, rows[i + (clicks*20)]);
+						}
+						size = ((size + 20) > count) ? count : (size + 20);
+						for (int i = 0; i < (size - (clicks * 20)); i++) {
+							model.insertRow(i, rows[i + (clicks * 20)]);
 						}
 						if (size == count) {
 							next.setEnabled(false);
 						}
 					}
 				});
-				
+
 				if (size == count) {
 					next.setEnabled(false);
 				}
-			
+
 			}
 		});
 		leftPanel.add(searchButton, gbc3);
-		
+
 		gbc3.gridx++;
-		gbc3.insets = new Insets(10, 10, 10, 20);	//top, left, bottom, right
+		gbc3.insets = new Insets(10, 10, 10, 20); // top, left, bottom, right
 		resetButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				count = 0;
-				isYearSelected = false; 
-				isRelevanceSelected = false; 
-				isAuthorSelected = false; 
+				isYearSelected = false;
+				isRelevanceSelected = false;
+				isAuthorSelected = false;
 				isTitleSelected = false;
 				new Query1();
 			}
 		});
 		leftPanel.add(resetButton, gbc3);
 
-		panel.add(leftPanel);		
-		
+		panel.add(leftPanel);
+
 		JTable table = new JTable(model);
 
 		table.setPreferredScrollableViewportSize(new Dimension(900, 450));
@@ -405,12 +405,12 @@ public class Query1 extends JFrame {
 
 		result.setFont(myFont2);
 		result.setText("No. of Results Obtained: \t" + count);
-		
+
 		gbc2.gridy++;
 		gbc2.fill = GridBagConstraints.HORIZONTAL;
 		gbc2.anchor = GridBagConstraints.CENTER;
 		rightPanel.add(result, gbc2);
-		
+
 		gbc2.gridy += 2;
 		gbc2.fill = GridBagConstraints.HORIZONTAL;
 		gbc2.anchor = GridBagConstraints.CENTER;
@@ -419,24 +419,23 @@ public class Query1 extends JFrame {
 		rightPanel.add(next, gbc2);
 
 		panel.add(rightPanel);
-		
+
 		queryOptions.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox<String> combo = (JComboBox<String>) e.getSource();
-		        String selectedQuery = (String) combo.getSelectedItem();
-		        dispose();
-	        	if (selectedQuery.equals("Query 1")) {
-		        	new Query1();
-		        }
-		        else if (selectedQuery.equals("Query 2")) {
-		        	new Query2();
-		        }
-		        else if (selectedQuery.equals("Query 3")) {
-		        	new Query3();
-		        }
+				String selectedQuery = (String) combo.getSelectedItem();
+				dispose();
+				if (selectedQuery.equals("Query 1")) {
+					new Query1();
+				} else if (selectedQuery.equals("Query 2")) {
+					new Query2();
+				} else if (selectedQuery.equals("Query 3")) {
+					new Query3();
+				}
 			}
 		});
-		
+
 		add(panel);
 		setVisible(true);
 	}

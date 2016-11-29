@@ -1,3 +1,10 @@
+/*
+ * @author Sanidhya Singal 2015085
+ * @author Pranav Nambiar 2015063
+ */
+
+import java.util.ArrayList;
+
 public class Data {
 	String author=new String();
 	String title=new String();
@@ -9,7 +16,14 @@ public class Data {
 	String url=new String();
 	String ee=new String();
 	String editor=new String();
+	ArrayList<String> auth=new ArrayList<String>();
 	int comp;
+	public ArrayList<String> getAuth(){
+		return this.auth;
+	}
+	public void setAuth(ArrayList<String> auth){
+		this.auth=auth;
+	}
 	
 	public String toString(){
 		return (author+" "+title+" "+pages+" "+year+" "+volume+" "+journal+" "+number+" "+url+" "+ee);
@@ -79,5 +93,20 @@ public class Data {
 	}
 	public void setEe(String ee) {
 		this.ee = ee;
+	}
+	public Data copy(){
+		Data n=new Data();
+		n.setComp(comp);
+		n.setEditor(editor);
+		n.setAuthor(author);
+		n.setTitle(title);
+		n.setPages(pages);
+		n.setYear(year);
+		n.setVolume(volume);
+		n.setJournal(journal);
+		n.setNumber(number);
+		n.setUrl(url);
+		n.setEe(ee);
+		return n;
 	}
 }

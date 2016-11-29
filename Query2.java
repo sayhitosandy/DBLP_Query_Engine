@@ -1,8 +1,11 @@
+/*
+ * @author Sanidhya Singal 2015085
+ * @author Pranav Nambiar 2015063
+ */
+
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.Map.Entry;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
@@ -92,6 +95,11 @@ public class Query2 extends JFrame {
 					return;
 				}
 				
+				if (k.equals("0")) {
+					prompt.InvalidEntryPrompt();
+					return;
+				}
+				
 				CheckValidString checker = new CheckValidString();
 				if (!(checker.isNumeric(k))) {
 					prompt.InvalidEntryPrompt();
@@ -105,15 +113,17 @@ public class Query2 extends JFrame {
 				
 				SortedSet<Map.Entry<String, Integer>> c = new TreeSet<Map.Entry<String, Integer>>(new Comparator<Map.Entry<String, Integer>>() {
 					public int compare(Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2) {
-						return e2.getValue().compareTo(e1.getValue());
+						int value = e2.getValue().compareTo(e1.getValue());
+						if (value == 0) return 1;
+						return value;
 					}
 				});
 				c.addAll(row.entrySet());
-				Iterator itr = c.iterator();
+				Iterator<Map.Entry<String, Integer>> itr = c.iterator();
 				int counn=0;
 				while (itr.hasNext()){
 					Map.Entry<String, Integer> me=(Map.Entry<String, Integer>)itr.next();
-					if (me.getValue().intValue()>=Integer.parseInt(k) && counn<row.size()){
+					if (me.getValue()>=Integer.parseInt(k) && counn<row.size()){
 						rows[counn][0] = String.valueOf(counn+1);
 						rows[counn][1] = me.getKey();
 						rows[counn][2] = String.valueOf(me.getValue());
@@ -122,6 +132,11 @@ public class Query2 extends JFrame {
 				}
 				
 				count = counn;
+				
+				if (count == 0) {
+					prompt.zeroResultCount();
+					return;
+				}
 
 				for (int i=0; i<columns.length; i++)
 					model.addColumn(columns[i]);

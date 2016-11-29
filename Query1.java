@@ -1,3 +1,8 @@
+/*
+ * @author Sanidhya Singal 2015085
+ * @author Pranav Nambiar 2015063
+ */
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -255,30 +260,59 @@ public class Query1 extends JFrame {
 					start = yearStart;
 					end = yearEnd;
 				}
-					
-				if (isAuthorSelected) {	
-					ParseCollection parse = new ParseCollection(tag, 1, start, end);
-					if (isYearSelected)
-						row = parse.getSortbyYear();
-					else if (isRelevanceSelected)
-						row = parse.getSortByRelevance();
-					else
-						row = parse.getResult();
-				}
-				else if (isTitleSelected) {
-					ParseCollection parse = new ParseCollection(tag, 2, start, end);
-					if (isYearSelected)
-						row = parse.getSortbyYear();
-					else if (isRelevanceSelected)
-						row = parse.getSortByRelevance();
-					else
-						row = parse.getResult();
+				
+				ParseCollection parse;
+				
+				if (isRelevanceSelected) {
+					if (isAuthorSelected)
+						parse = new ParseCollection(tag, 1, start, end, 1);
+					else if (isTitleSelected)
+						parse = new ParseCollection(tag, 2, start, end, 1);
+					else {
+						prompt.SelectButtonPrompt();
+						return;
+					}
+					row = parse.getSortByRelevance();
 				}
 				else {
-					prompt.SelectButtonPrompt();
-					return;
+					if (isAuthorSelected)
+						parse = new ParseCollection(tag, 1, start, end, 0);
+					else if (isTitleSelected)
+						parse = new ParseCollection(tag, 2, start, end, 0);
+					else {
+						prompt.SelectButtonPrompt();
+						return;
+					}
+					if (isYearSelected) {
+						row = parse.getSortbyYear();
+					}
+					else {
+						row = parse.getResult();
+					}
 				}
 					
+//				if (isAuthorSelected) {	
+//					ParseCollection parse = new ParseCollection(tag, 1, start, end);
+//					if (isYearSelected)
+//						row = parse.getSortbyYear();
+//					else if (isRelevanceSelected)
+//						row = parse.getSortByRelevance();
+//					else
+//						row = parse.getResult();
+//				}
+//				else if (isTitleSelected) {
+//					ParseCollection parse = new ParseCollection(tag, 2, start, end);
+//					if (isYearSelected)
+//						row = parse.getSortbyYear();
+//					else if (isRelevanceSelected)
+//						row = parse.getSortByRelevance();
+//					else
+//						row = parse.getResult();
+//				}
+//				else {
+//					prompt.SelectButtonPrompt();
+//					return;
+//				}
 				
 //				for (Data i : row)
 //					System.out.println(i);
@@ -287,6 +321,11 @@ public class Query1 extends JFrame {
 				String[][] rows = new String[row.size()][8];
 				
 				count = row.size();
+				
+				if (count == 0) {
+					prompt.zeroResultCount();
+					return;
+				}
 				
 				for (int i=0; i<row.size(); i++) {
 					rows[i][0] = String.valueOf(i+1);

@@ -1,3 +1,8 @@
+/*
+ * @author Sanidhya Singal 2015085
+ * @author Pranav Nambiar 2015063
+ */
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -6,7 +11,7 @@ public class View {
 	static ParseCollection parse;
 	public static void main(String[] args) {
 		System.out.println("Setting Up... Please Wait.");
-		parse = new ParseCollection("", 3, "", "");
+		parse = new ParseCollection("", 3, "", "",0);
 		System.out.println("You're ready to go!! :)");
 		new MyWelcomeFrame();
 	}
@@ -237,5 +242,10 @@ class Prompts {
 	public void SelectButtonPrompt() {
 		JFrame pop = new JFrame();
 		JOptionPane.showMessageDialog(pop, "Kindly select Author/Title.");
+	}
+
+	public void zeroResultCount() {
+		JFrame pop = new JFrame();
+		JOptionPane.showMessageDialog(pop, "No Result Found.");
 	}
 }

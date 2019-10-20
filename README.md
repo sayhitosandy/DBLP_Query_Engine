@@ -3,8 +3,8 @@
 GUI Search Engine that retrieves required data from huge XML file.
 
 #### How to run?
-In `Code` folder,
-__Compile__: `javac View.java`
+In `Code` folder,  
+__Compile__: `javac View.java`  
 __Run__: `java View`
 
 #### Links
